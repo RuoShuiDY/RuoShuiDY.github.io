@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-02-06T03:40:23.015Z</updated>
+  <updated>2020-02-07T04:06:28.580Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go语言从入门到放弃系列&lt;4&gt; 常用的Go命令</title>
+    <link href="http://yoursite.com/2020/02/07/4-%E5%B8%B8%E7%94%A8%E7%9A%84Go%E5%91%BD%E4%BB%A4/"/>
+    <id>http://yoursite.com/2020/02/07/4-%E5%B8%B8%E7%94%A8%E7%9A%84Go%E5%91%BD%E4%BB%A4/</id>
+    <published>2020-02-07T04:00:21.000Z</published>
+    <updated>2020-02-07T04:06:28.580Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Go语言从入门到放弃系列-lt-4-gt-常用的Go命令"><a href="#Go语言从入门到放弃系列-lt-4-gt-常用的Go命令" class="headerlink" title="Go语言从入门到放弃系列&lt;4&gt; 常用的Go命令"></a>Go语言从入门到放弃系列&lt;4&gt; 常用的Go命令</h2><p>&emsp;&emsp;在上一节中，我们集中对快速入门程序Hello World的编写做出了简要的讲解，同时对包的概念，引入的方式，主函数的执行流程做出基本的介绍。在这一节中，我们将对Go语言的中命令行的常用命令进行介绍。</p><p>&emsp;&emsp;相信许多初学者通过集成开发工具进行入门开发时，将两个go文件写在了同一个文件夹下，同时又都具备main函数，在用ide运行的时候报出了错误，我们从这个错误引入到今天的命令的介绍中。</p><p><img src="/2020/02/07/4-%E5%B8%B8%E7%94%A8%E7%9A%84Go%E5%91%BD%E4%BB%A4/1.png" alt><br><img src="/2020/02/07/4-%E5%B8%B8%E7%94%A8%E7%9A%84Go%E5%91%BD%E4%BB%A4/2.png" alt></p><h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><p>&emsp;&emsp;在上一节中，我们提出了包的概念，并且说明了一个项目中只能存在一个main函数，而一般来说，ide的编译运行是以工程为基础。换句话讲，便是以文件夹为基础的编译。因此当开发工具检测到同一个文件夹中含有两个或多个main函数时，会报出主函数重定义的错误。</p><p>&emsp;&emsp;1. 第一个解决办法当然便是将不同的go文件分放在不同的文件夹下，这样使得每个文件夹即每个工程都可以单独地进行编译以及运行，不过对于初学者来说这种做法尚不甚方便，到目前为止乃至于之后一段时间内所写的Demo性质的程序往往都是以单个文件为基础的，因此这个方法对于目前来说不是很适用。</p><p><img src="/2020/02/07/4-%E5%B8%B8%E7%94%A8%E7%9A%84Go%E5%91%BD%E4%BB%A4/3.png" alt></p><p>&emsp;&emsp;2. 第二个解决办法便是通过Go语言的命令行形式进行编译运行，就如同在前几节所提及的那样，通过控制台的cd命令进入到go文件所在的目录，然后运用go run命令进行运行，这种方式是以单个文件的方式进行编译的，因此不会报出重定义的错误。go语言的命令相对来说并不多，常用的也就更少了，我们会在下面着重讲述几个命令。</p><h3 id="常用的Go命令"><a href="#常用的Go命令" class="headerlink" title="常用的Go命令"></a>常用的Go命令</h3><p>&emsp;&emsp;如果在控制台直接输入go help命令，我们会发现系统提示了许多的可用命令，在这里便列一个表格，分别简单解释一下每个命令的含义。在后面我们也会针对其中的几个进行详细地讲解。</p><table><thead><tr><th>Go命令</th><th align="center">含义</th></tr></thead><tbody><tr><td>build</td><td align="center">编译包和依赖</td></tr><tr><td>clean</td><td align="center">移除对象文件</td></tr><tr><td>doc</td><td align="center">显示包或者符号的文档</td></tr><tr><td>env</td><td align="center">打印go的环境信息</td></tr><tr><td>bug</td><td align="center">启动错误报告</td></tr><tr><td>fix</td><td align="center">运行go tool fix</td></tr><tr><td>fmt</td><td align="center">运行gofmt进行格式化</td></tr><tr><td>generate</td><td align="center">从processing source生成go文件</td></tr><tr><td>get</td><td align="center">下载并安装包和依赖</td></tr><tr><td>install</td><td align="center">编译并安装包和依赖</td></tr><tr><td>list</td><td align="center">列出包</td></tr><tr><td>run</td><td align="center">编译并运行go程序</td></tr><tr><td>test</td><td align="center">运行测试</td></tr><tr><td>tool</td><td align="center">运行go提供的工具</td></tr><tr><td>version</td><td align="center">显示go的版本</td></tr><tr><td>vet</td><td align="center">运行go tool vet</td></tr></tbody></table><h4 id="build和run命令"><a href="#build和run命令" class="headerlink" title="build和run命令"></a>build和run命令</h4><p>&emsp;&emsp;正如同其他的静态语言一般，Go语言也是需要先编译再运行的。编译过程产生可执行文件，如Windows中的exe文件，之后再运行该可执行文件。而go build命令就是用来编译的，并不是所有的go程序都会编译出可执行文件，其条件即为：go程序属于main包、main包中包含main函数。现在假如在test文件夹中只有一个TestDemo.go文件，我们通过命令行定位到该位置后，键入go build TestDemo.go后，结果将如下图所示：</p><p><img src="/2020/02/07/4-%E5%B8%B8%E7%94%A8%E7%9A%84Go%E5%91%BD%E4%BB%A4/4.png" alt></p><p>&emsp;&emsp;从上图我们可以发现，build命令会生成一个与go文件相同名的可执行文件，进而执行该文件可以得到输出结果。可是往往我们在实际开发中，并不希望生成的可执行文件与go文件是同名的，在另一些情况下多个go程序生成的名字是相同的时候，会覆盖旧版本的exe文件（在大工程中很容易出现）。因此我们希望在编译过程中将生成的结果修改名字，其命令为： go build -o 新名字 go文件。</p><p><img src="/2020/02/07/4-%E5%B8%B8%E7%94%A8%E7%9A%84Go%E5%91%BD%E4%BB%A4/5.png" alt></p><p>&emsp;&emsp;而go run的方法则是将编译和运行两个步骤合并为一个步骤，因此我们在使用go run命令时，在当前的文件夹中或其他的位置是找不到可执行文件的生成的，这很适用于程序开发中的调试阶段，具体便不做演示了。</p><h4 id="fmt以及doc命令"><a href="#fmt以及doc命令" class="headerlink" title="fmt以及doc命令"></a>fmt以及doc命令</h4><p>&emsp;&emsp;在上一节中我们演示到一个问题，就是大括号的位置问题。同时，Go语言有一个特性，便是对格式的要求十分的严格。不同的开发者对这个特性的看法不一，不过也是需要遵守这个格式的。各个开发者的格式是统一的，便利于组合开发以及代码的清晰。go fmt命令便是格式化代码，将代码根据规定的格式进行调整。其格式为：go fmt xxx.go，这个也不做演示了，而且一般情况下也不要手动去调用，一般的集成开发工具都会自动帮助我们去调整。</p><p>&emsp;&emsp;doc命令是查看文档的命令，例如我们在使用fmt包的时候忘记了某个函数如何去写，或希望查到某个函数的具体含义，可能就会用到这个命令，其格式为:go doc package，在终端上就会显示这个包的文档。由于控制台的大小有限，一般来说直接go doc一个包会显示不全。不过我们可以使用go doc package.function来查具体的功能。</p><p><img src="/2020/02/07/4-%E5%B8%B8%E7%94%A8%E7%9A%84Go%E5%91%BD%E4%BB%A4/6.png" alt></p><p>&emsp;&emsp;还有一个比较好的一点是，这个命令可以启动我们自己的文档服务器，比如说我们使用godoc -http=:10000(数字可以随意，不过需要大于1024)，之后打开一个浏览器，在网址栏中输入localhost:10000我们会发现出现了图形界面的帮助文档，可以离线地、更方便地查询信息。</p><p><img src="/2020/02/07/4-%E5%B8%B8%E7%94%A8%E7%9A%84Go%E5%91%BD%E4%BB%A4/7.png" alt></p><h4 id="get和install命令"><a href="#get和install命令" class="headerlink" title="get和install命令"></a>get和install命令</h4><p>&emsp;&emsp;get命令也是十分常用的命令，我们可以通过这个命令来直接从网上下载第三方的包，调用方式为go get source。如果本地已经存有该文件，便会更新指定的代码和依赖，如果使用go语言操作redis数据库，下载并使用beego的web框架时等，会通过这个命令进行下载。</p><p>&emsp;&emsp;install命令与build命令十分的相像，其结果都是生成一个可执行程序，不同点便是生成的可执行文件的路径、名字、以及依赖包。这时我们需要在环境变量中配置GOBIN变量，这个变量的值便是GOPATH下的bin目录，在这里我们简要地演示一下。</p><p><img src="/2020/02/07/4-%E5%B8%B8%E7%94%A8%E7%9A%84Go%E5%91%BD%E4%BB%A4/8.png" alt></p><p>&emsp;&emsp;那么install和build的区别具体可用如下的表格来表示:</p><table><thead><tr><th>区别</th><th align="left">install</th><th align="center">build</th></tr></thead><tbody><tr><td>生成可执行文件路径</td><td align="left">在工作目录的bin目录下，或GOBIN下</td><td align="center">当前目录下</td></tr><tr><td>可执行文件名</td><td align="left">和源码所在的目录同名</td><td align="center">与go文件同名，或-o设定</td></tr><tr><td>依赖包</td><td align="left">在工作目录的pkg文件夹中</td><td align="center">-</td></tr></tbody></table><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;在这个小结中，我们初步解决了在Demo演示过程中出现的主函数重定义问题，以及介绍了一些Go语言中相对常用的几个命令。在下一小节中，我们将集中讲解进制相关的一些问题，进而在后续的文章中引出数据类型的概念以及其可以表示的大小的限制。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;Go语言从入门到放弃系列-lt-4-gt-常用的Go命令&quot;&gt;&lt;a href=&quot;#Go语言从入门到放弃系列-lt-4-gt-常用的Go命令&quot; class=&quot;headerlink&quot; title=&quot;Go语言从入门到放弃系列&amp;lt;4&amp;gt; 常用的Go命令&quot;&gt;&lt;/a&gt;G
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Go语言" scheme="http://yoursite.com/tags/Go%E8%AF%AD%E8%A8%80/"/>
+    
+  </entry>
   
   <entry>
     <title>Go语言从入门到放弃系列&lt;3&gt; 基于Hello World的几点讨论</title>
