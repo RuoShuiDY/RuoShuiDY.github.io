@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>Go语言从入门到放弃系列&lt;15&gt; 运算符-逻辑，位运算，及其他运算符 | 云钰的亭轩阁</title><meta name="generator" content="Hexo 4.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Go语言从入门到放弃系列&lt;15&gt; 运算符-逻辑，位运算，及其他运算符</h1><a id="logo" href="/.">云钰的亭轩阁</a><p class="description">Running water never goes stale, so you gotta just keep on flowing.</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="search"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">Go语言从入门到放弃系列&lt;15&gt; 运算符-逻辑，位运算，及其他运算符</h1><div class="post-meta"><a href="/2020/02/18/15-%E8%BF%90%E7%AE%97%E7%AC%A6-%E9%80%BB%E8%BE%91%EF%BC%8C%E4%BD%8D%E8%BF%90%E7%AE%97%EF%BC%8C%E5%8F%8A%E5%85%B6%E4%BB%96%E8%BF%90%E7%AE%97%E7%AC%A6/#comments" class="comment-count"></a><p><span class="date">Feb 18, 2020</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>Hits</i></i></span></p></div><div class="post-content"><h2 id="Go语言从入门到放弃系列-lt-15-gt-运算符-逻辑，位运算，及其他运算符"><a href="#Go语言从入门到放弃系列-lt-15-gt-运算符-逻辑，位运算，及其他运算符" class="headerlink" title="Go语言从入门到放弃系列&lt;15&gt; 运算符-逻辑，位运算，及其他运算符"></a>Go语言从入门到放弃系列&lt;15&gt; 运算符-逻辑，位运算，及其他运算符</h2><p>&emsp;&emsp;在上一小节中，我们集中说明了Go语言中的运算符中的三种，分别是：算数运算符，赋值运算符，以及关系运算符。在这一小节中，我们将继续介绍另外的几种运算符，并且将列举各个运算符的优先级，使读者当面对一个表达式的时候可以准确地计算出该表达式的值。</p>
+<h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><p>&emsp;&emsp;在Go语言中，逻辑运算符也相对较少，主要用到的是三个，分别为：&amp;&amp;（逻辑与），||（逻辑或），！（逻辑非）。在数学中乃至于电路中这三种逻辑也十分地常见，这三个运算符是针对于布尔值进行运算的，即其符号左右都需要是布尔值变量或者结果为布尔值的表达式。在一些语言中可以将0代替为false，将1代替为true，使之符号左右可以出现整数，但是在Go语言中，这种使用方式是错误的。</p>
+<p>&emsp;&emsp;既然逻辑运算符是针对于布尔值的，而布尔值只有两种值可以取，因此我们可以很容易列举出不同情况下的返回值，我们也可以称之为真值表，根据我们的理解，也可以相对容易地分析出真值表中的各个值：</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>p值</th>
+<th>q值</th>
+<th>p与q</th>
+<th>p或q</th>
+<th align="center">非p</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>true</td>
+<td>true</td>
+<td>true</td>
+<td>true</td>
+<td align="center">false</td>
+</tr>
+<tr>
+<td>2</td>
+<td>true</td>
+<td>false</td>
+<td>false</td>
+<td>true</td>
+<td align="center">false</td>
+</tr>
+<tr>
+<td>3</td>
+<td>false</td>
+<td>true</td>
+<td>false</td>
+<td>true</td>
+<td align="center">true</td>
+</tr>
+<tr>
+<td>4</td>
+<td>false</td>
+<td>false</td>
+<td>false</td>
+<td>false</td>
+<td align="center">true</td>
+</tr>
+</tbody></table>
+<p>&emsp;&emsp;当进行逻辑运算的时候可以完全遵循上述的真值表进行计算。从上述的真值表中我们可以发现，在&amp;&amp;（与）逻辑中，当且仅当左右两个表达式的值均为true的时候其结果才为true，在||（或）逻辑中，当且仅当左右两个表达式均为false的时候其结果才为false，在!（非）逻辑中，其结果仅仅是将后面表达式的结果取反。</p>
+<h4 id="短路现象"><a href="#短路现象" class="headerlink" title="短路现象"></a>短路现象</h4><p>&emsp;&emsp;如果我们将上述的那段话换一种说法：在&amp;&amp;（与）逻辑中，只要左右出现了一个false的表达式，其结果一定就是false，同理，在||（或）逻辑中，只要出现了一个true的表达式，其结果一定就是true。也就是说，在列表中的几种情况中，计算机可以只通过一个表达式的值就可以得到整个表达式的真假，因此计算机可以完全不需要对后半部分的值进行判断，即将后半部分短路了。我们举个例子：（用到了if和函数的知识）</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">retTrue</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">"这个函数返回的是true"</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">retFalse</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">"这个函数返回的是false"</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> retFalse() &amp;&amp; retTrue() &#123;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="string">"----------------------------"</span>)</span><br><span class="line">	<span class="keyword">if</span> retTrue() || retFalse() &#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;在上述程序中，我们定义了两个自定义函数，分别是retTrue和retFalse，调用这两个函数的返回值分别是true和false，当调用的时候会输出函数中的字符串。因此，在main函数的调用过程中，我们可以根据输出的字符串来判断函数究竟有没有执行。经过运行，我们可以看到如下的结果：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这个函数返回的是<span class="literal">false</span></span><br><span class="line">----------------------------</span><br><span class="line">这个函数返回的是<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;在程序中的main函数中的横线上方我们是调用了两个函数的，但是结果中只输出了一句话，从中可以判定在&amp;&amp;符号后方的表达式没有被执行。同理在横线下也调用了两个函数，但是也是只输出了一句话，其||符号后的表达式依旧没有执行。</p>
+<p>&emsp;&emsp;具体的分析过程如下：在第一个运算中，计算机调用了retFalse函数之后，发现其返回值为false，然而在与逻辑中只要出现一个false其结果就一定为false，所以后面的表达式是否执行或执行结果对最终结果完全无影响，因此就不需要执行了。在或逻辑中，计算机先调用了retTrue函数且得到了true的返回值，只要出现了一个true其结果一定为true，所以后面的表达式就不需要执行了。</p>
+<p>&emsp;&emsp;短路与和短路或逻辑在使用中需要注意这一点，在小型的计算中这个特性一般不会被体现出来，但是在逻辑极为复杂且用到很多的逻辑运算符时就会很令人费解。例如我们在函数中对某个全局变量的值进行了修改，但是在不同的情况下，这个函数可能会执行，也可能被短路，这样这个全局变量的值就很难追踪了。</p>
+<h3 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h3><p>&emsp;&emsp;位运算符的原理与数据的二进制表示方法有较大的相关性，所以位运算更贴近于计算机底层操作，因此在日常的开发过程中几乎很少能看到这种运算符。但是对于位运算有较好的掌握对于算法的优化、计算的效率的提升会有较大的帮助，因此我们在这里对位运算进行一些简要的讲解。</p>
+<h4 id="gt-gt-（右移）-lt-lt-（左移）运算"><a href="#gt-gt-（右移）-lt-lt-（左移）运算" class="headerlink" title="&gt;&gt;（右移）&lt;&lt;（左移）运算"></a>&gt;&gt;（右移）&lt;&lt;（左移）运算</h4><p>&emsp;&emsp;根据这两种运算符的名称可以看出，这两种运算都是针对于二进制位的移动的，其格式a&gt;&gt;b的含义为将a数据以二进制表示后向右移动b个位置。那么既然位置在移动就难免会出现移动出可表示的区域的情况和新补充进来的数据位的值的判断。在这里我们介绍一个移位运算溢出时的规律：右移过程中溢出数据舍弃，高位根据符号位的值补充，左移过程中高位溢出舍弃，低位补零。我们先用两个例子进行说明：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="keyword">int</span> = <span class="number">10</span></span><br><span class="line">a = a &gt;&gt; <span class="number">1</span></span><br><span class="line">fmt.Println(a)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;经过运行后，我们可以得到结果为5。这个结果出现的原因为：首先定义一个变量a为10，用二进制表示为（假设8个二进制位）：00001010，现在我们将其向右移动一位，高位补充为符号位的数据，即得到的结果是：00000101，再换算成10进制为5。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="keyword">int</span> = <span class="number">10</span></span><br><span class="line">a = a &lt;&lt; <span class="number">2</span></span><br><span class="line">fmt.Println(a)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;这段程序的输出结果为40，其原因类似于上述的过程，首先将10用二进制表示（假设8个字节）：00001010，将其左移2位后，低位补充进去两个0，得到的结果是：00101000，换算成十进制后结果为40。</p>
+<p>&emsp;&emsp;现在我们再举一个负数且会出现数据溢出的例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="keyword">int</span> = <span class="number">-11</span></span><br><span class="line">a = a &gt;&gt; <span class="number">2</span></span><br><span class="line">fmt.Println(a)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;计算结果为-3，分析这个过程会相对复杂一些，不过依旧和二进制与补码的知识十分相关。首先我们将-11用二进制表示，-11的原码为：10001011，但是在计算机中对负数的存储方式是补码的方式，因此需要对其转换成补码的样式：11110101。现在我们将当前的二进制数向右移两个位，且溢出的位丢弃，补充进来的高位与符号位相同，其结果为：11111101，目前得到的结果是个负数且是补码的形式，因此我们在输出的时候将其转回原码形式进行输出：原码格式为：100000011，再按原码形式解读结果为-3。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="keyword">int8</span> = <span class="number">-100</span></span><br><span class="line">a = a &lt;&lt; <span class="number">1</span></span><br><span class="line">fmt.Println(a)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;读者可以自己先分写一下这个结果会是多少然后再看下述的分析。首先对-100进行码制转换，-100的原码是：11100100，转换成补码后得到的结果为：10011100。现在将这个值向左移动1位高位溢出，低位补0，得到的结果为：00111000，这时候符号位已经变成了0，所以其表示的是一个正数，正数的原码与补码相同，转换到十进制后结果就是56。</p>
+<p>&emsp;&emsp;在上述的几个例子中，我们似乎可以发现另一个规律，当数据进行左移n位操作的时候，相当于数据乘以2的n次幂，数据进行右移操作的时候，相当于除以2的n次幂。乘法运算中出现数据溢出，除法操作出现向下取整。可以说，这种左移右移运算是计算数据乘以2或除以2时最好的方法。</p>
+<h4 id="按位与、或、异或、与非、按位取反"><a href="#按位与、或、异或、与非、按位取反" class="headerlink" title="按位与、或、异或、与非、按位取反"></a>按位与、或、异或、与非、按位取反</h4><p>&emsp;&emsp;在理解了上述的真值表之后，我们若将二进制中的1替换成true，二进制中的0替换为false，这个小节就会相对容易理解了。这个小节所介绍到的所有操作依旧是针对于二进制的，因此在进行运算时首先要转换为二进制。</p>
+<h5 id="amp-符号（按位与）"><a href="#amp-符号（按位与）" class="headerlink" title="&amp;符号（按位与）"></a>&amp;符号（按位与）</h5><p>&emsp;&emsp;将两个数据全部转换成二进制后，针对每一位进行与操作，只有两个数据的这个位全为1的时候，结果中的该位才为1，任意一个数据该位为0，结果中该位的值也为0，举例说明：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fmt.Println(<span class="number">86</span> &amp; <span class="number">120</span>)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;其输出结果为80。其原因为：将172转换成二进制：01010110，将120转换为二进制：01111000，将两个数据按位与运算后结果如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">	<span class="number">01010110</span></span><br><span class="line">	<span class="number">01111000</span></span><br><span class="line">-----------------</span><br><span class="line">	<span class="number">01010000</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;最后将01010000转换为十进制后为80。</p>
+<h5 id="符号-按位或"><a href="#符号-按位或" class="headerlink" title="|符号(按位或)"></a>|符号(按位或)</h5><p>&emsp;&emsp;我们将这个符号与上述进行类比，将两个数据转换成二进制后，数据位全部是0的时候结果为0，否则为1，依旧是上述的数据：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="number">86</span> | <span class="number">120</span>)</span><br><span class="line">	</span><br><span class="line">	<span class="number">01010110</span></span><br><span class="line">	<span class="number">01111000</span></span><br><span class="line">----------------</span><br><span class="line">	<span class="number">01111110</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;将01111110转换成十进制后，结果为126。</p>
+<h5 id="符号（按位取反、异或）"><a href="#符号（按位取反、异或）" class="headerlink" title="^符号（按位取反、异或）"></a>^符号（按位取反、异或）</h5><p>&emsp;&emsp;当^符号作为单目运算符号时，即运算符前没有数据（例如正负号），此时这个符号的含义为按位取反，即该数据的某二进制位为1，结果中该位为0，反之亦然（包括符号位）。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	fmt.Println(^<span class="number">86</span>)</span><br><span class="line">	</span><br><span class="line">	<span class="number">01010110</span></span><br><span class="line">----------------</span><br><span class="line">	<span class="number">10101001</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;得到结果为10101001，转换成原码后为：11010111，按源码方式读取后十进制结果为：-87。</p>
+<p>&emsp;&emsp;当该符号作为双目运算符使用时，其代表的含义为异或，换句话说：当两个数据某位不同的时候，结果中该位为1，当位数据相同时，其结果为0（符号位参与运算）：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="number">86</span> ^ <span class="number">-120</span>)</span><br><span class="line"></span><br><span class="line">	<span class="number">01010110</span></span><br><span class="line">	<span class="number">10001000</span>	（补码形式）</span><br><span class="line">----------------</span><br><span class="line">	<span class="number">11011110</span>	===&gt;<span class="number">10100010</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;输出结果为：-34。</p>
+<h5 id="amp-符号（与非）"><a href="#amp-符号（与非）" class="headerlink" title="&amp;^符号（与非）"></a>&amp;^符号（与非）</h5><p>&emsp;&emsp;这个操作相当于是先将第二个数按位取反，然后将这个结果与第一个数做按位与操作，其特性可以记为：第二个操作数的某位为0的时候，结果为第一个操作数的值，当第二个操作数某位为1的时候，结果该位为0。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="number">86</span> &amp;^ <span class="number">120</span>)</span><br><span class="line"></span><br><span class="line">	<span class="number">01010110</span></span><br><span class="line">	<span class="number">10000111</span>	（取反后）</span><br><span class="line">----------------	</span><br><span class="line">	<span class="number">00000110</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;其输出结果为：6。</p>
+<h3 id="其他运算符"><a href="#其他运算符" class="headerlink" title="其他运算符"></a>其他运算符</h3><p>&emsp;&emsp;Go语言中归纳为其他运算符的可以说只有两个，这两个运算符在我们讲解指针的时候提及过，即：&amp;运算符与*运算符。&amp;运算符表示的含义为返回变量的存储地址，*的含义为取出指针变量中所指向的值。具体就不做过多的讲解了，在指针数据类型的小节中有详细的例子与说明。</p>
+<h3 id="运算符的优先级表"><a href="#运算符的优先级表" class="headerlink" title="运算符的优先级表"></a>运算符的优先级表</h3><table>
+<thead>
+<tr>
+<th>分类</th>
+<th>描述</th>
+<th align="center">关联性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>后缀</td>
+<td>() [] -&gt; . ++ –</td>
+<td align="center">左到右</td>
+</tr>
+<tr>
+<td>一元</td>
+<td>+ - ! ~ ++ – (type) * &amp;</td>
+<td align="center">右到左</td>
+</tr>
+<tr>
+<td>乘法</td>
+<td>* / %</td>
+<td align="center">左到右</td>
+</tr>
+<tr>
+<td>加法</td>
+<td>+ -</td>
+<td align="center">左到右</td>
+</tr>
+<tr>
+<td>移位</td>
+<td>&lt;&lt; &gt;&gt;</td>
+<td align="center">左到右</td>
+</tr>
+<tr>
+<td>关系</td>
+<td>&lt; &lt;= &gt; &gt;=</td>
+<td align="center">左到右</td>
+</tr>
+<tr>
+<td>相等</td>
+<td>== !=</td>
+<td align="center">左到右</td>
+</tr>
+<tr>
+<td>按位AND</td>
+<td>&amp;</td>
+<td align="center">左到右</td>
+</tr>
+<tr>
+<td>按位XOR</td>
+<td>^</td>
+<td align="center">左到右</td>
+</tr>
+<tr>
+<td>按位OR</td>
+<td>&#124;</td>
+<td align="center">左到右</td>
+</tr>
+<tr>
+<td>逻辑AND</td>
+<td>&amp;&amp;</td>
+<td align="center">左到右</td>
+</tr>
+<tr>
+<td>逻辑OR</td>
+<td>&#124;&#124;</td>
+<td align="center">左到右</td>
+</tr>
+<tr>
+<td>条件</td>
+<td>? :</td>
+<td align="center">右到左</td>
+</tr>
+<tr>
+<td>分配</td>
+<td>= += -= *= /= %= &gt;&gt;= &lt;&lt;= &amp;= ^= &#124;=</td>
+<td align="center">右到左</td>
+</tr>
+<tr>
+<td>逗号</td>
+<td>,</td>
+<td align="center">左到右</td>
+</tr>
+</tbody></table>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;在这个小节中，我们继续说明了Go语言中其他种类的几种运算符，包括逻辑运算及其短路现象，位运算的多个运算符的运算规则，以及提到了指针的两个运算法则。同时，我们也列出了运算符的优先级顺序，优先级越高在表达式中越先执行，反之越低则越后执行。</p>
+<p>&emsp;&emsp;在下一个小节中，我们将对人机交互时向计算机输入信息所用的函数以及其包做出简要的介绍，同时对输入时遇到的分隔符以及字符串问题进行解决。</p>
+</div><div class="tags"><a href="/tags/Go%E8%AF%AD%E8%A8%80/">Go语言</a></div><div class="post-share"></div><div class="post-nav"><a href="/2020/02/17/14-%E8%BF%90%E7%AE%97%E7%AC%A6-%E7%AE%97%E6%95%B0%E3%80%81%E8%B5%8B%E5%80%BC%E4%B8%8E%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6/" class="next">Go语言从入门到放弃系列&lt;14&gt; 运算符-算数、赋值与比较运算符</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">Contents</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Go语言从入门到放弃系列-lt-15-gt-运算符-逻辑，位运算，及其他运算符"><span class="toc-text">Go语言从入门到放弃系列&lt;15&gt; 运算符-逻辑，位运算，及其他运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#逻辑运算符"><span class="toc-text">逻辑运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#短路现象"><span class="toc-text">短路现象</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#位运算符"><span class="toc-text">位运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#gt-gt-（右移）-lt-lt-（左移）运算"><span class="toc-text">&gt;&gt;（右移）&lt;&lt;（左移）运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#按位与、或、异或、与非、按位取反"><span class="toc-text">按位与、或、异或、与非、按位取反</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#amp-符号（按位与）"><span class="toc-text">&amp;符号（按位与）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#符号-按位或"><span class="toc-text">|符号(按位或)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#符号（按位取反、异或）"><span class="toc-text">^符号（按位取反、异或）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#amp-符号（与非）"><span class="toc-text">&amp;^符号（与非）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他运算符"><span class="toc-text">其他运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运算符的优先级表"><span class="toc-text">运算符的优先级表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-text">小结</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/02/18/15-%E8%BF%90%E7%AE%97%E7%AC%A6-%E9%80%BB%E8%BE%91%EF%BC%8C%E4%BD%8D%E8%BF%90%E7%AE%97%EF%BC%8C%E5%8F%8A%E5%85%B6%E4%BB%96%E8%BF%90%E7%AE%97%E7%AC%A6/">Go语言从入门到放弃系列<15> 运算符-逻辑，位运算，及其他运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/17/14-%E8%BF%90%E7%AE%97%E7%AC%A6-%E7%AE%97%E6%95%B0%E3%80%81%E8%B5%8B%E5%80%BC%E4%B8%8E%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6/">Go语言从入门到放弃系列<14> 运算符-算数、赋值与比较运算符</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/16/13-%E6%8C%87%E9%92%88%E7%B1%BB%E5%9E%8B%E7%AE%80%E6%98%8E%E8%AE%B2%E8%BF%B0/">Go语言从入门到放弃系列<13> 指针类型简明讲述</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/15/12-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%BD%AC%E6%8D%A2/">Go语言从入门到放弃系列<12> 基本数据类型的转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/14/11-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%B2%BE%E8%AE%B2-%E5%AD%97%E7%AC%A6%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/">Go语言从入门到放弃系列<11> 基本数据类型精讲-字符和字符串</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/13/10-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%B2%BE%E8%AE%B2-%E6%95%B4%E5%9E%8B%E5%92%8C%E6%B5%AE%E7%82%B9%E5%9E%8B/">Go语言从入门到放弃系列<10> 基本数据类型精讲-整型和浮点型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/12/9-%E6%A0%87%E8%AF%86%E7%AC%A6%EF%BC%8C%E8%BE%93%E5%87%BA%E5%8F%8A%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6/">Go语言从入门到放弃系列<9> 标识符、输出及转义字符</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/11/8-%E5%8F%98%E9%87%8F%E7%9A%84%E5%AE%9A%E4%B9%89%E5%8F%8A%E4%BD%BF%E7%94%A8/">Go语言从入门到放弃系列<8> 变量的定义及使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/10/7-%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E4%BA%8C/">Go语言从入门到放弃系列<7> 数据与数据的存储<二></a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/09/6-%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E4%B8%80/">Go语言从入门到放弃系列<6> 数据与数据的存储<一></a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> Tags</i></div><div class="tagcloud"><a href="/tags/Go%E8%AF%AD%E8%A8%80/" style="font-size: 15px;">Go语言</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> Archive</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a><span class="archive-list-count">15</span></li></ul></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">Site Map</a> |  <a href="/atom.xml">Subscribe to this site</a> |  <a href="/about/">Contact the blogger</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">Devin DENG.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/" target="_blank" rel="noopener"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script></body></html>
